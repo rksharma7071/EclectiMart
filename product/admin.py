@@ -4,7 +4,23 @@ from product.models import *
 
 @admin.register(Product_category)
 class Product_categoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'desc', 'created_at', 'modified_at']
+    list_display = ['name', 'created_at', 'modified_at']
+
+
+@admin.register(Sub_Product_category1)
+class Subproduct_category1Admin(admin.ModelAdmin):
+    list_display = ['product_category', 'name', 'created_at', 'modified_at']
+
+
+@admin.register(Sub_Product_category2)
+class Subproduct_category2Admin(admin.ModelAdmin):
+    list_display = ['sub_product_category1', 'name', 'created_at', 'modified_at']
+
+
+@admin.register(Sub_Product_category3)
+class Subproduct_category3Admin(admin.ModelAdmin):
+    list_display = ['sub_product_category2', 'name', 'created_at', 'modified_at']
+
 
 
 @admin.register(Product_inventory)
@@ -14,7 +30,7 @@ class Product_inventoryAdmin(admin.ModelAdmin):
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ['name', 'desc', 'discount_percent', 'active', 'created_at', 'modified_at']
+    list_display = ['name', 'discount_percent', 'active', 'created_at', 'modified_at']
 
 
 @admin.register(Product)
@@ -52,7 +68,7 @@ class Order_itemsAdmin(admin.ModelAdmin):
     list_display = ['order', 'product', 'quantity', 'created_at', 'modified_at']
 
 
-@admin.register(shopping_session)
+@admin.register(Shopping_session)
 class shopping_sessionAdmin(admin.ModelAdmin):
     list_display = ['user', 'total', 'created_at', 'modified_at']
 

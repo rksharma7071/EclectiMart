@@ -3,7 +3,36 @@ from django.db import models
 
 class Product_category(models.Model):
     name = models.CharField(max_length=255)
-    desc = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Sub_Product_category1(models.Model):
+    name = models.CharField(max_length=255)
+    product_category = models.ForeignKey(Product_category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Sub_Product_category2(models.Model):
+    name = models.CharField(max_length=255)
+    sub_product_category1 = models.ForeignKey(Sub_Product_category1, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Sub_Product_category3(models.Model):
+    name = models.CharField(max_length=255)
+    sub_product_category2 = models.ForeignKey(Sub_Product_category2, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -22,7 +51,6 @@ class Product_inventory(models.Model):
 
 class Discount(models.Model):
     name = models.CharField(max_length=255)
-    desc = models.TextField()
     discount_percent = models.IntegerField()
     active = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -37,6 +65,8 @@ class Product(models.Model):
     desc = models.TextField()
     sku = models.CharField(max_length=20)
     category = models.ForeignKey(Product_category, on_delete=models.CASCADE)
+    sub_category1 = models.ForeignKey(Sub_Product_category1, on_delete=models.CASCADE)
+    sub_category2 = models.ForeignKey(Sub_Product_category2, on_delete=models.CASCADE)
     inventory = models.ForeignKey(Product_inventory, on_delete=models.CASCADE)
     price = models.FloatField()
     discount = models.IntegerField()
@@ -120,7 +150,7 @@ class Order_items(models.Model):
         return self.order
 
 
-class shopping_session(models.Model):
+class Shopping_session(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -131,7 +161,7 @@ class shopping_session(models.Model):
 
 
 class Cart_item(models.Model):
-    session = models.ForeignKey(shopping_session, on_delete=models.CASCADE)
+    session = models.ForeignKey(Shopping_session, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)

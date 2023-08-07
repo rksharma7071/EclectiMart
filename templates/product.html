@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style type="text/css"></style>
 </head>
 <body>
-    <h1>Product</h1>
+    <div class="container">
+        <div class="row bg-warning text-center py-2">
+            <h1>Product Categories</h1>
+        </div>
+        <div class="row p-3">
+            <div class="col col-6 m-auto border shadow rounded-3">
+                <form method="post" class="p-3">
+                    {% csrf_token %}
+                    <div class="form-group py-2">
+                        <label for="product_category" class="form-label">Select Product Category</label>     
+                        <select id="product_category" name="product_category" class="form-control">
+                            <option value="" disabled selected>Select a category</option>
+                            {% for category in product_categories %}
+                                <option value="{{ category.id }}" {% if product_cat.id is category.id %} selected {% endif %}>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>  
+                    </div>
+                    <div class="form-group py-2" >
+                        <label for="sub_category" class="form-label">Select Sub-Category</label>
+                        <select id="sub_category" name="sub_category" class="form-control">
+                            <option value="" disabled selected>Select a Sub category</option>
+                            {% for subcategory in sub_categories %}
+                                <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="submit" name="Submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
